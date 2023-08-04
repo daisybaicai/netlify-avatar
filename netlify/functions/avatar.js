@@ -1,4 +1,4 @@
-import axios from "axios";
+const axios = required("axios");
 exports.handler = async function (event, context, callback) {
   let url = event.queryStringParameters.name.trim();
 
