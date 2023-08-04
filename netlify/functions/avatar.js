@@ -1,32 +1,17 @@
 import axios from "axios";
 exports.handler = async function (event, context, callback) {
   let url = event.queryStringParameters.name.trim();
-  if (!url) {
-    return {
-      statusCode: 200,
-      body: {
-        code: 500,
-        message: 'url is required'
-      },
-    };
-  }
 
-//   const result  = await axios.get(url).then(res => res.data);
-
-//   return {
-//     statusCode: 200,
-//     body: identicon(name),
-//   };
-  axios.get(url).then(res => {
-    const result = res.data;
-    callback(null, {
+    return axios.get(url).then(response => {
+        return {
         statusCode: 200,
-        body: result,
+        body: JSON.stringify(response.data)
+        }
+    }).catch(error => {
+        console.log(error)
+        return {
+        statusCode: 422
+        body: `Error: ${error}`,
+        }
     })
-  }).catch(err => {
-    callback({
-        statusCode: 500,
-        body: String(err),
-    })
-  })
 };
